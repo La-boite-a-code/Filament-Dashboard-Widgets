@@ -453,13 +453,27 @@ a.fi-fdw-recent__item:focus-visible {
 }
 
 .fi-fdw-timeline__group-label {
-    margin: 0;
-    padding: 0.25rem 0;
+    align-self: flex-start;
+    margin: 0 0 0.25rem;
+    padding: 0.1875rem 0.5rem;
     font-size: 0.6875rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: var(--gray-500);
+    color: var(--gray-600);
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 0.375rem;
+}
+
+.fi-fdw-timeline__list + .fi-fdw-timeline__group-label {
+    margin-top: 0.75rem;
+}
+
+.dark .fi-fdw-timeline__group-label {
+    color: var(--gray-300);
+    background-color: rgb(255 255 255 / 0.05);
+    border-color: rgb(255 255 255 / 0.1);
 }
 
 .fi-fdw-timeline__list {
@@ -495,18 +509,25 @@ a.fi-fdw-recent__item:focus-visible {
     background-color: color-mix(in srgb, var(--color-500) 14%, transparent);
 }
 
-.fi-fdw-timeline__event:not(:last-child) .fi-fdw-timeline__marker::after {
+.dark .fi-fdw-timeline__marker {
+    color: var(--color-400);
+    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+}
+
+/* Connector drawn on the event, not the marker: the marker has overflow:hidden
+   (to clip avatars) which would otherwise crop the line to the pastille. */
+.fi-fdw-timeline__event:not(:last-child)::before {
     content: '';
     position: absolute;
     top: 1.75rem;
-    left: 50%;
-    bottom: -1.25rem;
+    bottom: 0;
+    left: 0.875rem;
     width: 2px;
     transform: translateX(-50%);
     background-color: var(--gray-200);
 }
 
-.dark .fi-fdw-timeline__event:not(:last-child) .fi-fdw-timeline__marker::after {
+.dark .fi-fdw-timeline__event:not(:last-child)::before {
     background-color: var(--gray-700);
 }
 
@@ -1380,5 +1401,56 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     .fi-fdw-cardw__value {
         font-size: 2.25rem;
         line-height: 2.5rem;
+    }
+}
+
+/* Dark-mode muted-text contrast: lift secondary text to gray-400 (~5.8:1 on
+   the dark surface) so labels, timestamps and percentages meet WCAG AA. */
+.dark .fi-fdw-heading__description,
+.dark .fi-fdw-label,
+.dark .fi-fdw-muted,
+.dark .fi-fdw-goal__target,
+.dark .fi-fdw-breakdown__percentage,
+.dark .fi-fdw-recent__description,
+.dark .fi-fdw-recent__meta,
+.dark .fi-fdw-timeline__description,
+.dark .fi-fdw-timeline__time,
+.dark .fi-fdw-usage__limit,
+.dark .fi-fdw-usage__threshold,
+.dark .fi-fdw-segbar__legend-percentage,
+.dark .fi-fdw-funnel__conversion,
+.dark .fi-fdw-empty__description {
+    color: var(--gray-400);
+}
+
+/* Dark-mode accent icons: the metric icon and recent-item avatars used the
+   dark color-600 shade with no dark override, sitting dark-on-dark. Match the
+   card-variant convention (lighter color-400 tile) for a consistent glow. */
+.dark .fi-fdw-metric__icon,
+.dark .fi-fdw-recent__visual {
+    color: var(--color-400);
+    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+}
+
+/* Keyboard focus for the clickable list rows that only had a hover state. */
+a.fi-fdw-breakdown__item:focus-visible,
+a.fi-fdw-usage__item:focus-visible,
+a.fi-fdw-variance__item:focus-visible,
+a.fi-fdw-funnel__stage:focus-visible,
+a.fi-fdw-segbar__legend-item:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+}
+
+/* Smooth the row hovers instead of snapping. */
+@media (prefers-reduced-motion: no-preference) {
+    .fi-fdw-recent__item {
+        transition: background-color 0.15s ease;
+    }
+
+    .fi-fdw-breakdown__label,
+    .fi-fdw-funnel__label {
+        transition: color 0.15s ease;
     }
 }

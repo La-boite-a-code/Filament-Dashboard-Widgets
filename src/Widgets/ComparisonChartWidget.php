@@ -74,7 +74,12 @@ abstract class ComparisonChartWidget extends ChartWidget
                 $dataset['backgroundColor'] = $color;
             } else {
                 $dataset['borderColor'] = $color;
-                $dataset['backgroundColor'] = $color;
+                // A filled area uses a translucent tint so it sits under the
+                // line instead of flooding the card with a solid slab; this
+                // reads well in both light and dark themes.
+                $dataset['backgroundColor'] = $item->isFilled()
+                    ? 'color-mix(in srgb, '.$color.' 18%, transparent)'
+                    : $color;
                 $dataset['fill'] = $item->isFilled() ? 'start' : false;
             }
 
