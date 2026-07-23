@@ -1,0 +1,15 @@
+parameters:
+    level: 6
+    paths:
+        - src
+    tmpDir: build/phpstan
+    # The defensive instanceof filters in the list widgets guard against wrong
+    # runtime data even though the PHPDoc return types already narrow it.
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Package views are not discoverable during static analysis, so the
+        # view-string assignments on the abstract widgets cannot be verified.
+        -
+            identifier: property.defaultValue
+            message: '#\$view \(view-string\) does not accept default value of type string\.#'

@@ -1,0 +1,16 @@
+/vendor
+/node_modules
+composer.lock
+.phpunit.result.cache
+.phpunit.cache
+/.idea
+/.vscode
+/.fleet
+/.nova
+/build
+/coverage
+.php-cs-fixer.cache
+.pest
+testbench.yaml
+.DS_Store
+Thumbs.db

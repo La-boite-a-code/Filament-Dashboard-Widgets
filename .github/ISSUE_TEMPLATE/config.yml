@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and discussions
+    url: https://github.com/la-boite-a-code/filament-dashboard-widgets/discussions
+    about: Ask questions and discuss the package with the community.

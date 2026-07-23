@@ -1,0 +1,23 @@
+# Keep the Composer dist archive lean: development, CI and documentation
+# assets are never needed inside an installed dependency.
+/.github            export-ignore
+/art                export-ignore
+/docs               export-ignore
+/tests              export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/CONTRIBUTING.md    export-ignore
+/UPGRADING.md       export-ignore
+/phpstan.neon.dist  export-ignore
+/phpunit.xml.dist   export-ignore
+/pint.json          export-ignore
+
+# Enforce consistent line endings.
+*.php      text eol=lf
+*.blade.php text eol=lf
+*.css      text eol=lf
+*.json     text eol=lf
+*.md       text eol=lf
+*.yml      text eol=lf
+*.neon     text eol=lf

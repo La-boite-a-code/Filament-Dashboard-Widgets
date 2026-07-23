@@ -1,0 +1,77 @@
+{
+    "name": "laboiteacode/filament-dashboard-widgets",
+    "description": "A collection of ready to use, professional dashboard widgets for Filament: metrics, goals, breakdowns, trends and recent items.",
+    "keywords": [
+        "laboiteacode",
+        "laravel",
+        "filament",
+        "filamentphp",
+        "dashboard",
+        "widgets",
+        "kpi",
+        "metrics",
+        "analytics"
+    ],
+    "homepage": "https://github.com/la-boite-a-code/filament-dashboard-widgets",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "La Boite A Code",
+            "email": "alexandre@laboiteacode.fr",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/la-boite-a-code/filament-dashboard-widgets/issues",
+        "source": "https://github.com/la-boite-a-code/filament-dashboard-widgets",
+        "docs": "https://github.com/la-boite-a-code/filament-dashboard-widgets/blob/main/README.md"
+    },
+    "require": {
+        "php": "^8.3",
+        "filament/filament": "^4.0|^5.0",
+        "illuminate/contracts": "^12.0|^13.0",
+        "spatie/laravel-package-tools": "^1.15"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.7|^4.0",
+        "pestphp/pest-plugin-livewire": "^3.0|^4.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaBoiteACode\\FilamentDashboardWidgets\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaBoiteACode\\FilamentDashboardWidgets\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaBoiteACode\\FilamentDashboardWidgets\\FilamentDashboardWidgetsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
