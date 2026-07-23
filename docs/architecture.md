@@ -10,23 +10,28 @@ Every widget is an abstract class that the application extends with its own
 data. The package never ships concrete, ready to register widgets because the
 data always belongs to the application.
 
-- `MetricWidget`, `GoalProgressWidget`, `BreakdownWidget` and
-  `RecentItemsWidget` extend a shared `DashboardWidget` base which itself
-  extends Filament's native `Filament\Widgets\Widget`. The base only adds the
-  cross cutting concerns (`CanPoll`, `HasEmptyState`) and never reimplements
-  anything Filament already provides, such as `getColumnSpan()`.
-- `RecentItemsWidget` and `BreakdownWidget` additionally implement Filament's
-  `HasActions` and `HasSchemas` contracts through the native
-  `InteractsWithActions` and `InteractsWithSchemas` traits. This gives their
-  "View all" and "View more" footers real Filament actions instead of a
+- The twelve non chart widgets (`MetricWidget`, `GoalProgressWidget`,
+  `BreakdownWidget`, `RecentItemsWidget`, `DetailListWidget`, `BulletWidget`,
+  `FunnelWidget`, `TimelineWidget`, `VarianceWidget`, `SegmentBarWidget`,
+  `UsageLimitsWidget` and `CardWidget`) extend a shared `DashboardWidget` base
+  which itself extends Filament's native `Filament\Widgets\Widget`. The base
+  only adds the cross cutting concerns (`CanPoll`, `HasEmptyState`) and never
+  reimplements anything Filament already provides, such as `getColumnSpan()`.
+- `RecentItemsWidget`, `BreakdownWidget` and `TimelineWidget` additionally
+  implement Filament's `HasActions` and `HasSchemas` contracts through the
+  native `InteractsWithActions` and `InteractsWithSchemas` traits. This gives
+  their "View all" and "View more" footers real Filament actions instead of a
   parallel action system.
-- `TrendWidget` extends `Filament\Widgets\ChartWidget` directly so the chart is
-  drawn by Filament's own Chart.js integration. No JavaScript ships with this
-  package.
+- The three chart widgets (`TrendWidget`, `CompositionWidget` and
+  `ComparisonChartWidget`) extend `Filament\Widgets\ChartWidget` directly so
+  the charts are drawn by Filament's own Chart.js integration. No JavaScript
+  ships with this package.
 
 The data itself lives in small, fluent value objects (`Metric`, `Goal`,
-`BreakdownItem`, `RecentItem`, `Trend`, `TrendPoint`, `WidgetAction`). They keep
-the widget classes thin and are trivial to unit test in isolation.
+`BreakdownItem`, `RecentItem`, `Trend`, `TrendPoint`, `Composition`,
+`CompositionSlice`, `Detail`, `Bullet`, `FunnelStage`, `TimelineEvent`,
+`VarianceItem`, `UsageLimit`, `ChartSeries`, `Card` and `WidgetAction`). They
+keep the widget classes thin and are trivial to unit test in isolation.
 
 ## Callback strategy
 
@@ -52,10 +57,10 @@ inject, so a simple, predictable and fully testable resolver is a better fit.
 ## Livewire strategy
 
 Widgets never store the data objects, closures or Eloquent models in public
-Livewire properties. Instead, the concrete widget builds its data inside
-`getMetric()`, `getGoal()`, `getItems()` or `getTrend()`, and the base widget
-exposes only the resolved, primitive friendly values to the Blade view through
-`getViewData()`.
+Livewire properties. Instead, the concrete widget builds its data inside its
+data method (`getMetric()`, `getGoal()`, `getItems()`, `getEvents()` and so
+on), and the base widget exposes only the resolved, primitive friendly values
+to the Blade view through `getViewData()`.
 
 This has two consequences:
 
@@ -77,8 +82,9 @@ colour are respected automatically.
 
 Generic building blocks (empty states, badges, icons, links, actions) use
 Filament's own Blade components. Only the widget specific visuals that Filament
-has no primitive for (the metric value, the sparkline, the progress and
-breakdown bars) are drawn with the package stylesheet.
+has no primitive for (the metric value, the sparkline, the progress, breakdown
+and segment tracks, the bullet graph, the funnel, the timeline rail and the
+usage meters) are drawn with the package stylesheet.
 
 ## Performance limits
 

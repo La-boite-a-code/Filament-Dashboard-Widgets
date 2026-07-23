@@ -12,8 +12,8 @@ as your own widgets keep extending the abstract widgets shipped by the package.
 
 ## Upgrading to 0.x
 
-The package follows the abstract widget pattern: your application widgets extend
-`MetricWidget`, `GoalProgressWidget`, `BreakdownWidget`, `RecentItemsWidget` or
-`TrendWidget`. If a future release renames or reshapes a public method on those
-classes or on the data objects, the migration steps will be documented in this
-section.
+The package follows the abstract widget pattern: your application widgets
+extend one of the fifteen abstract widgets shipped by the package
+(`MetricWidget`, `GoalProgressWidget`, `TimelineWidget` and so on). If a future
+release renames or reshapes a public method on those classes or on the data
+objects, the migration steps will be documented in this section.

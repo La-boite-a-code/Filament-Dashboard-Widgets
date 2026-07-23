@@ -40,8 +40,8 @@ Mobile:
 - **Light and dark themes** and full responsiveness out of the box.
 - **No front-end build step**: a small, self contained stylesheet is injected
   inline, using Filament design tokens and the panel accent colour.
-- **Accessible**: structured headings, screen reader labels, focus styles and
-  `prefers-reduced-motion` support.
+- **Accessible**: structured headings, screen reader labels, WCAG AA contrast
+  in both themes, keyboard focus styles and `prefers-reduced-motion` support.
 - Escaped by default, with no query ever run by the package.
 
 ## Requirements
@@ -536,9 +536,11 @@ class RevenueVsTargetWidget extends ComparisonChartWidget
 }
 ```
 
-Each series renders as a `line` or `bar` (`->type()`), can be `->filled()`, and
-takes a Filament colour token via `->color()`; series without one cycle the
-default palette. Built on Filament's own `ChartWidget`.
+Each series renders as a `line` or `bar` (`->type()`) and takes a Filament
+colour token via `->color()`; series without one cycle the default palette. A
+`->filled()` line series shades the area under the line with a translucent tint
+of its colour, in light and dark themes alike. Built on Filament's own
+`ChartWidget`.
 
 ### CardWidget
 
