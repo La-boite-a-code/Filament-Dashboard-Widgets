@@ -23,6 +23,9 @@ jobs:
           - php: '8.4'
             filament: '5'
             dependency-version: prefer-lowest
+          - php: '8.3'
+            filament: '4'
+            dependency-version: prefer-lowest
 
     name: PHP ${{ matrix.php }} - Filament ${{ matrix.filament }} - ${{ matrix.dependency-version }}
 
@@ -38,7 +41,7 @@ jobs:
           coverage: none
 
       - name: Select the Filament major version
-        run: composer require "filament/filament:^${{ matrix.filament }}.0" --no-update --no-interaction
+        run: composer require "filament/filament:${{ matrix.filament == '4' && '^4.12' || '^5.7.1' }}" --no-update --no-interaction
 
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-progress

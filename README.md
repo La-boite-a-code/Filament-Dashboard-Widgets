@@ -48,7 +48,7 @@ Mobile:
 
 - PHP 8.3, 8.4 or 8.5
 - Laravel 12 or 13
-- Filament 4 or 5
+- Filament 4.12+ or 5.7.1+
 
 ## Installation
 
