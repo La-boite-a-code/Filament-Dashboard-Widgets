@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Filament Dashboard Widgets - banner</title>
+<style>
+  @font-face { font-family: "Satoshi"; src: local("Satoshi-Light");  font-weight: 300; font-style: normal; }
+  @font-face { font-family: "Satoshi"; src: local("Satoshi-Regular"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Satoshi"; src: local("Satoshi-Medium"); font-weight: 500; font-style: normal; }
+  @font-face { font-family: "Satoshi"; src: local("Satoshi-Bold");   font-weight: 700; font-style: normal; }
+  @font-face { font-family: "Satoshi"; src: local("Satoshi-Black");  font-weight: 900; font-style: normal; }
+
+  :root{
+    --paper:#FAF8F4;
+    --ink:#17150F;
+    --ink-2:#514B41;
+    --muted:#8A8172;
+    --line:#E6E0D4;
+    --amber:#F59E0B;
+    --amber-deep:#B45309;
+    --mark:#FDE68A;
+
+    /* Filament / product UI tokens (light) */
+    --ui-line:#E5E7EB;
+    --ui-line-2:#F3F4F6;
+    --ui-text:#111827;
+    --ui-muted:#6B7280;
+    --ui-muted-2:#9CA3AF;
+    --ui-surface:#F9FAFB;
+    --green:#16A34A;
+    --red:#DC2626;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ width:1280px; height:720px; overflow:hidden; }
+  body{
+    position:relative;
+    background:var(--paper);
+    font-family:"Satoshi", -apple-system, BlinkMacSystemFont, sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+
+  /* ---------- atmosphere ---------- */
+  .dotgrid{
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(23,21,15,.13) 1px, transparent 0);
+    background-size:22px 22px;
+    -webkit-mask-image:linear-gradient(115deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.16) 46%, transparent 72%);
+            mask-image:linear-gradient(115deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.16) 46%, transparent 72%);
+  }
+  .glow-a{
+    position:absolute; width:900px; height:900px; right:-230px; top:-380px;
+    background:radial-gradient(circle, rgba(245,158,11,.20) 0%, rgba(245,158,11,.07) 42%, transparent 66%);
+  }
+  .glow-b{
+    position:absolute; width:760px; height:760px; left:-300px; bottom:-380px;
+    background:radial-gradient(circle, rgba(180,83,9,.09) 0%, transparent 64%);
+  }
+  .wash{
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 46%, rgba(228,219,202,.34) 100%);
+  }
+
+  .stage{ position:relative; width:1280px; height:720px; }
+
+  /* ---------- left column ---------- */
+  .copy{
+    position:absolute; left:74px; top:0; bottom:0; width:502px;
+    display:flex; flex-direction:column; justify-content:center;
+    z-index:3;
+  }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:12.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--amber-deep);
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--amber);
+    box-shadow:0 0 0 4px rgba(245,158,11,.16);
+  }
+  .eyebrow .sep{ color:#D9CDB6; font-weight:500; letter-spacing:0; }
+
+  h1{
+    font-weight:900; font-size:82px; line-height:.92; letter-spacing:-.035em;
+    color:var(--ink);
+  }
+  h1 .l2{ display:block; }
+
+  .sub{
+    margin-top:24px;
+    font-size:20.5px; line-height:1.5; font-weight:500; color:var(--ink-2);
+    max-width:470px; letter-spacing:-.006em;
+  }
+  .sub mark{
+    background:var(--mark); color:#3A2A05; border-radius:3px;
+    padding:.06em .22em; margin-inline:-.06em;
+    box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  }
+
+  .pills{ display:flex; gap:9px; margin-top:32px; flex-wrap:wrap; max-width:470px; }
+  .pill{
+    display:inline-flex; align-items:center; gap:7px;
+    padding:8px 13px 8px 11px;
+    background:rgba(255,255,255,.85);
+    border:1px solid var(--line);
+    border-radius:999px;
+    font-size:13px; font-weight:600; color:var(--ink-2); letter-spacing:-.005em;
+    box-shadow:0 1px 2px rgba(23,21,15,.03);
+  }
+  .pill svg{ width:14px; height:14px; stroke:var(--amber-deep); fill:none; stroke-width:2; }
+
+  .cmd{
+    margin-top:34px;
+    display:inline-flex; align-items:center; gap:11px;
+    align-self:flex-start;
+    padding:12px 17px;
+    background:#FFFFFF;
+    border:1px solid var(--line);
+    border-radius:11px;
+    box-shadow:0 1px 2px rgba(23,21,15,.04), 0 8px 18px -12px rgba(23,21,15,.18);
+    font-family:ui-monospace,"SF Mono",Menlo,monospace;
+    font-size:12px; color:#332E24; letter-spacing:-.01em; white-space:nowrap;
+  }
+  .cmd .prompt{ color:var(--amber); font-weight:700; }
+  .cmd .dim{ color:var(--muted); }
+
+  /* ---------- right: widget mocks ---------- */
+  .mock{ position:absolute; inset:0; z-index:2; }
+
+  .card{
+    position:absolute;
+    background:#fff;
+    border:1px solid var(--ui-line);
+    border-radius:14px;
+    padding:16px 18px;
+    box-shadow:0 1px 2px rgba(23,21,15,.04), 0 16px 34px -20px rgba(23,21,15,.20);
+  }
+  .card.hero{
+    box-shadow:
+      0 2px 4px rgba(23,21,15,.05),
+      0 30px 56px -22px rgba(23,21,15,.26),
+      -26px 44px 92px -46px rgba(23,21,15,.38);
+  }
+
+  .w-label{ font-size:12.5px; font-weight:600; color:var(--ui-muted); letter-spacing:-.005em; }
+  .w-title{ font-size:13.5px; font-weight:700; color:var(--ui-text); letter-spacing:-.012em; }
+  .w-muted{ font-size:11px; color:var(--ui-muted); }
+
+  .badge{
+    display:inline-flex; align-items:center; gap:4px;
+    padding:2px 8px; border-radius:6px;
+    font-size:10.5px; font-weight:600; letter-spacing:-.005em;
+    white-space:nowrap;
+  }
+  .badge svg{ width:11px; height:11px; fill:none; stroke:currentColor; stroke-width:2; }
+  .badge.green{ background:#F0FDF4; color:#15803D; box-shadow:inset 0 0 0 1px rgba(22,163,74,.18); }
+  .badge.amber{ background:#FFFBEB; color:#B45309; box-shadow:inset 0 0 0 1px rgba(217,119,6,.18); }
+  .badge.red{   background:#FEF2F2; color:#B91C1C; box-shadow:inset 0 0 0 1px rgba(220,38,38,.18); }
+
+  .bar{
+    height:7px; border-radius:999px; background:var(--ui-line-2);
+    overflow:hidden;
+  }
+  .bar > i{ display:block; height:100%; border-radius:999px; background:var(--amber); }
+  .bar > i.green{ background:#22C55E; }
+  .bar > i.gray{ background:#9CA3AF; }
+
+  /* metric */
+  .metric-head{ display:flex; align-items:center; justify-content:space-between; }
+  .metric-head svg{ width:18px; height:18px; stroke:var(--ui-muted-2); fill:none; stroke-width:1.5; }
+  .metric-value-row{ display:flex; align-items:center; gap:10px; margin-top:9px; }
+  .metric-value{
+    font-size:28px; font-weight:800; color:var(--ui-text);
+    letter-spacing:-.025em; font-variant-numeric:tabular-nums;
+  }
+  .metric .w-muted{ margin-top:4px; }
+  .spark{ margin:12px -4px 0; }
+  .spark svg{ display:block; width:100%; height:64px; }
+
+  /* usage limits */
+  .usage-rows{ display:flex; flex-direction:column; gap:15px; margin-top:13px; }
+  .usage-row .u-head{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin-bottom:6px;
+  }
+  .u-name{ display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ui-text); }
+  .u-name svg{ width:13px; height:13px; stroke:var(--ui-muted); fill:none; stroke-width:1.7; flex-shrink:0; }
+  .u-val{ display:flex; align-items:center; gap:6px; font-size:11px; color:var(--ui-muted); font-variant-numeric:tabular-nums; }
+  .meter{ height:6px; border-radius:999px; background:var(--ui-line-2); overflow:hidden; }
+  .meter > i{ display:block; height:100%; border-radius:999px; background:var(--amber); }
+
+  /* segment bar */
+  .seg-track{
+    display:flex; height:14px; border-radius:999px; overflow:hidden; margin-top:12px;
+  }
+  .seg-track i{ display:block; height:100%; }
+  .seg-legend{ display:flex; gap:12px; margin-top:10px; font-size:10.5px; color:var(--ui-muted); white-space:nowrap; }
+  .seg-legend b{ color:var(--ui-text); font-weight:600; }
+  .seg-legend .sw{ display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:5px; vertical-align:1px; }
+
+  /* goal */
+  .goal-values{ display:flex; align-items:baseline; gap:6px; margin-top:8px; }
+  .goal-current{ font-size:20px; font-weight:800; color:var(--ui-text); letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+  .goal-target{ font-size:12px; color:var(--ui-muted); font-variant-numeric:tabular-nums; }
+  .goal .bar{ margin-top:9px; }
+  .goal-meta{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+
+  /* funnel */
+  .fn-stage .fn-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:5px;
+  }
+  .fn-name{ font-size:12px; font-weight:600; color:var(--ui-text); }
+  .fn-val{ font-size:11.5px; font-weight:700; color:var(--ui-text); font-variant-numeric:tabular-nums; }
+  .fn-track{ height:8px; border-radius:999px; background:var(--ui-line-2); overflow:hidden; }
+  .fn-track i{ display:block; height:100%; border-radius:999px; background:var(--amber); }
+  .fn-track i.green{ background:#22C55E; }
+  .fn-conn{
+    display:flex; align-items:center; gap:5px;
+    padding:5px 0 5px 2px;
+    font-size:10px; color:var(--ui-muted); font-variant-numeric:tabular-nums;
+  }
+  .fn-conn svg{ width:10px; height:10px; stroke:var(--ui-muted-2); fill:none; stroke-width:2; }
+  .fn-stages{ margin-top:12px; }
+
+  /* variance */
+  .vr-rows{ display:flex; flex-direction:column; gap:13px; margin-top:13px; }
+  .vr-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; }
+  .vr-name{ font-size:12px; font-weight:600; color:var(--ui-text); }
+  .vr-vals{ display:flex; align-items:center; gap:7px; font-variant-numeric:tabular-nums; }
+  .vr-value{ font-size:11.5px; color:var(--ui-muted); }
+  .vr-delta{ display:inline-flex; align-items:center; gap:3px; font-size:11.5px; font-weight:700; }
+  .vr-delta svg{ width:11px; height:11px; fill:none; stroke:currentColor; stroke-width:2; }
+  .vr-delta.pos{ color:#15803D; }
+  .vr-delta.neg{ color:#B91C1C; }
+  .vr-track{ position:relative; height:8px; }
+  .vr-track .axis{ position:absolute; left:50%; top:-2px; bottom:-2px; width:1px; background:var(--ui-line); }
+  .vr-track .vbar{ position:absolute; top:0; height:8px; }
+  .vr-track .vbar.pos{ left:50%; background:#22C55E; border-radius:0 999px 999px 0; }
+  .vr-track .vbar.neg{ right:50%; background:#EF4444; border-radius:999px 0 0 999px; }
+
+  /* card geometry */
+  .m-metric{  left:600px; top:96px;  width:322px; height:222px; }
+  .m-usage{   left:600px; top:348px; width:322px; height:186px; }
+  .m-segment{ left:600px; top:558px; width:322px; height:140px; }
+  .m-goal{    left:946px; top:40px;  width:310px; height:164px; }
+  .m-funnel{  left:946px; top:232px; width:310px; height:262px; }
+  .m-variance{left:946px; top:518px; width:310px; height:186px; }
+
+  /* floating zoom - the trend, magnified, anchored on its subject */
+  .zoom{
+    position:absolute; left:732px; top:262px; width:224px; z-index:4;
+    background:#fff; border:1px solid var(--ui-line); border-radius:12px;
+    box-shadow:0 2px 4px rgba(23,21,15,.06), 0 22px 44px -18px rgba(23,21,15,.30);
+    padding:13px 15px;
+  }
+  .zoom .z-eyebrow{
+    font-size:9px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ui-muted); margin-bottom:7px;
+  }
+  .zoom .z-label{ font-size:12.5px; font-weight:700; color:var(--ui-text); letter-spacing:-.012em; margin-bottom:8px; }
+  .zoom .z-row{ display:flex; align-items:center; gap:8px; }
+  .zoom .badge{ font-size:12.5px; padding:3px 10px; }
+  .zoom .badge svg{ width:13px; height:13px; }
+  .zoom .z-note{ font-size:11px; color:var(--ui-muted); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="wash"></div>
+  <div class="dotgrid"></div>
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+
+  <!-- ============ WIDGET MOCKS ============ -->
+  <div class="mock">
+
+    <!-- metric -->
+    <div class="card hero metric m-metric">
+      <div class="metric-head">
+        <span class="w-label">Monthly revenue</span>
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60 60 0 0 1 15.8 2.1c.73.2 1.45-.34 1.45-1.1v-1M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75M2.25 6v9m18-10.5v.75c0 .41.34.75.75.75h.75M2.25 15v.38c0 .62.5 1.12 1.12 1.12h16.5c.63 0 1.13-.5 1.13-1.12V6.37c0-.62-.5-1.12-1.13-1.12H3.38c-.63 0-1.13.5-1.13 1.12ZM15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-value">&euro;24,850</span>
+        <span class="badge green">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.31 4.31a11.95 11.95 0 0 1 5.81-5.52l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.94"/></svg>
+          <span>+12.4%</span>
+        </span>
+      </div>
+      <p class="w-muted">Compared to last month</p>
+      <div class="spark">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sg" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#F59E0B" stop-opacity="0.32"/>
+              <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,65 L16.7,55 L33.3,60 L50,35 L66.7,15 L83.3,25 L100,5 L100,100 L0,100 Z" fill="url(#sg)"/>
+          <polyline points="0,65 16.7,55 33.3,60 50,35 66.7,15 83.3,25 100,5"
+            fill="none" stroke="#F59E0B" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round"
+            vector-effect="non-scaling-stroke"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- usage limits -->
+    <div class="card m-usage">
+      <span class="w-title">Plan usage</span>
+      <div class="usage-rows">
+        <div class="usage-row">
+          <div class="u-head">
+            <span class="u-name">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
+              Seats
+            </span>
+            <span class="u-val">42 / 50</span>
+          </div>
+          <div class="meter"><i style="width:84%"></i></div>
+        </div>
+        <div class="usage-row">
+          <div class="u-head">
+            <span class="u-name">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+              Storage
+            </span>
+            <span class="u-val">380 / 500 GB</span>
+          </div>
+          <div class="meter"><i style="width:76%"></i></div>
+        </div>
+        <div class="usage-row">
+          <div class="u-head">
+            <span class="u-name">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>
+              API calls
+            </span>
+            <span class="u-val">92k / 100k <span class="badge amber">92%</span></span>
+          </div>
+          <div class="meter"><i style="width:92%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- segment bar -->
+    <div class="card m-segment">
+      <span class="w-title">Traffic by source</span>
+      <div class="seg-track">
+        <i style="width:59%; background:#22C55E"></i>
+        <i style="width:28%; background:#F59E0B"></i>
+        <i style="width:13%; background:#9CA3AF"></i>
+      </div>
+      <div class="seg-legend">
+        <span><span class="sw" style="background:#22C55E"></span>Organic <b>5,400</b></span>
+        <span><span class="sw" style="background:#F59E0B"></span>Direct <b>2,600</b></span>
+        <span><span class="sw" style="background:#9CA3AF"></span>Referral <b>1,200</b></span>
+      </div>
+    </div>
+
+    <!-- goal -->
+    <div class="card goal m-goal">
+      <span class="w-label">Monthly goal</span>
+      <div class="goal-values">
+        <span class="goal-current">&euro;72,500</span>
+        <span class="goal-target">/ &euro;100,000</span>
+      </div>
+      <div class="bar"><i style="width:72.5%"></i></div>
+      <div class="goal-meta">
+        <span class="w-muted">Remaining: &euro;27,500</span>
+        <span class="badge amber">72.5%</span>
+      </div>
+    </div>
+
+    <!-- funnel -->
+    <div class="card m-funnel">
+      <span class="w-title">Signup funnel</span>
+      <div class="fn-stages">
+        <div class="fn-stage">
+          <div class="fn-head"><span class="fn-name">Visitors</span><span class="fn-val">4,200</span></div>
+          <div class="fn-track"><i style="width:100%"></i></div>
+        </div>
+        <div class="fn-conn">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          30.5%
+        </div>
+        <div class="fn-stage">
+          <div class="fn-head"><span class="fn-name">Signups</span><span class="fn-val">1,280</span></div>
+          <div class="fn-track"><i style="width:30%"></i></div>
+        </div>
+        <div class="fn-conn">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          50%
+        </div>
+        <div class="fn-stage">
+          <div class="fn-head"><span class="fn-name">Activated</span><span class="fn-val">640</span></div>
+          <div class="fn-track"><i style="width:15%"></i></div>
+        </div>
+        <div class="fn-conn">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          32.8%
+        </div>
+        <div class="fn-stage">
+          <div class="fn-head"><span class="fn-name">Paying</span><span class="fn-val">210</span></div>
+          <div class="fn-track"><i class="green" style="width:5%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- variance -->
+    <div class="card m-variance">
+      <span class="w-title">Top movers this week</span>
+      <div class="vr-rows">
+        <div class="vr-row">
+          <div class="vr-head">
+            <span class="vr-name">Enterprise</span>
+            <span class="vr-vals">
+              <span class="vr-value">3,200</span>
+              <span class="vr-delta pos">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5 19.5 4.5m0 0H9m10.5 0V15"/></svg>
+                +600
+              </span>
+            </span>
+          </div>
+          <div class="vr-track"><span class="axis"></span><span class="vbar pos" style="width:45%"></span></div>
+        </div>
+        <div class="vr-row">
+          <div class="vr-head">
+            <span class="vr-name">SMB</span>
+            <span class="vr-vals">
+              <span class="vr-value">1,800</span>
+              <span class="vr-delta neg">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5 19.5 19.5m0 0V9m0 10.5H9"/></svg>
+                &minus;300
+              </span>
+            </span>
+          </div>
+          <div class="vr-track"><span class="axis"></span><span class="vbar neg" style="width:22%"></span></div>
+        </div>
+        <div class="vr-row">
+          <div class="vr-head">
+            <span class="vr-name">Startup</span>
+            <span class="vr-vals">
+              <span class="vr-value">900</span>
+              <span class="vr-delta pos">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5 19.5 4.5m0 0H9m10.5 0V15"/></svg>
+                +300
+              </span>
+            </span>
+          </div>
+          <div class="vr-track"><span class="axis"></span><span class="vbar pos" style="width:23%"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- floating zoomed trend -->
+    <div class="zoom">
+      <div class="z-eyebrow">This month</div>
+      <div class="z-label">Monthly revenue</div>
+      <div class="z-row">
+        <span class="badge green">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.31 4.31a11.95 11.95 0 0 1 5.81-5.52l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.94"/></svg>
+          +12.4%
+        </span>
+        <span class="z-note">vs last month</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COPY ============ -->
+  <div class="copy">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span>Filament plugin</span>
+      <span class="sep">/</span>
+      <span>v4 &amp; v5</span>
+    </div>
+
+    <h1>Dashboard<span class="l2">Widgets</span></h1>
+
+    <p class="sub">
+      A suite of <mark>fifteen polished widgets</mark> for SaaS dashboards,
+      CRMs and back-offices: typed, fluent API, native Filament components,
+      no build step.
+    </p>
+
+    <div class="pills">
+      <span class="pill">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg>
+        Metrics, goals, funnels &amp; more
+      </span>
+      <span class="pill">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"/></svg>
+        Follows your panel colours
+      </span>
+      <span class="pill">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>
+        No front-end build step
+      </span>
+    </div>
+
+    <div class="cmd">
+      <span class="prompt">$</span>
+      <span><span class="dim">composer require</span> laboiteacode/filament-dashboard-widgets</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
