@@ -673,6 +673,13 @@ php artisan vendor:publish --tag="filament-dashboard-widgets-translations"
 The titles and business data always come from your application; only the shared
 labels ("View all", "Remaining", "Goal reached", and so on) are translated.
 
+## Going further
+
+- [Architecture and design decisions](docs/architecture.md)
+- [A complete demo dashboard](docs/demo.md)
+- [Upgrade guide](UPGRADING.md)
+- [Changelog](CHANGELOG.md)
+
 ## Testing
 
 ```bash
@@ -689,7 +696,8 @@ Please see [SECURITY.md](SECURITY.md) for how to report vulnerabilities.
 
 ## Credits
 
-- [La Boite A Code](https://github.com/la-boite-a-code)
+- [Alexandre Ribes](https://alexandre-ribes.fr)
+- [La Boite A Code](https://laboiteacode.fr)
 
 ## License
 
