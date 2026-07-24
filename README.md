@@ -5,6 +5,8 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/laboiteacode/filament-dashboard-widgets.svg?style=flat-square)](https://packagist.org/packages/laboiteacode/filament-dashboard-widgets)
 [![License](https://img.shields.io/packagist/l/laboiteacode/filament-dashboard-widgets.svg?style=flat-square)](LICENSE.md)
 
+![Filament Dashboard Widgets](art/banner.jpg)
+
 A collection of ready to use, professional dashboard widgets for Filament,
 oriented towards SaaS products, CRMs, back-offices and business tools.
 
@@ -13,20 +15,6 @@ goals, progressions, breakdowns and short lists on top of them. This package
 provides fifteen distinct, polished widgets with a consistent, typed API, a
 professional look and a quick install with no additional front-end
 dependencies.
-
-## Preview
-
-Light theme:
-
-![The widgets in light theme](art/preview-light.png)
-
-Dark theme:
-
-![The widgets in dark theme](art/preview-dark.png)
-
-Mobile:
-
-![The widgets stacked on a mobile viewport](art/preview-mobile.png)
 
 ## Features
 

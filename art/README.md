@@ -4,9 +4,11 @@ Marketing assets for the [Filament plugin directory](https://filamentphp.com/plu
 
 | File | Size | Used for |
 | --- | --- | --- |
-| `banner.jpg` | 2560 x 1440 | Main image (16:9, at least 2560 x 1440) |
+| `banner.jpg` | 2560 x 1440 | Main image, also shown in the README (16:9, at least 2560 x 1440) |
 | `thumbnail.jpg` | 1920 x 1080 | Tighter crop for the plugins list (16:9, at least 1280 x 720) |
-| `preview-light.png`, `preview-dark.png`, `preview-mobile.png` | | README screenshots, rendered from `preview.html` |
+
+`preview.html` is a static, self contained preview of the demo dashboard,
+linked from [`docs/demo.md`](../docs/demo.md).
 
 The banner and the thumbnail are rendered from the matching `.html` files, so
 they can be regenerated after a design or wording change:

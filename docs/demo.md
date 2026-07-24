@@ -1,11 +1,8 @@
 # Demo dashboard
 
 This page shows a demo dashboard that uses a selection of the widgets with
-fictional data, so you can see how they fit together. The rendered result is
-shown in the screenshots in the project [README](../README.md).
-
-A static, self contained HTML preview is also available at
-[`art/preview.html`](../art/preview.html).
+fictional data, so you can see how they fit together. A static, self contained
+HTML preview is available at [`art/preview.html`](../art/preview.html).
 
 ## The widgets
 
