@@ -268,7 +268,7 @@ class Bullet
             return (string) ($this->formatValueUsing)($value);
         }
 
-        return (string) Number::format($value);
+        return (string) Number::format($value, locale: app()->getLocale());
     }
 
     public function getFormattedValue(): string

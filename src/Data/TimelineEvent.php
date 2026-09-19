@@ -148,8 +148,6 @@ class TimelineEvent
 
     public function getBadgeColor(): ?string
     {
-        $color = $this->evaluate($this->badgeColor);
-
-        return $color === null ? null : (string) $color;
+        return $this->sanitizeColorName($this->evaluate($this->badgeColor));
     }
 }

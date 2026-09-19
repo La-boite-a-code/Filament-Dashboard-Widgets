@@ -19,13 +19,30 @@ trait HasColor
 
     public function getColor(): ?string
     {
-        $color = $this->evaluate($this->color);
-
-        return $color === null ? null : (string) $color;
+        return $this->sanitizeColorName($this->evaluate($this->color));
     }
 
     public function hasColor(): bool
     {
         return filled($this->getColor());
+    }
+
+    /**
+     * Colour names end up inside a "style" attribute as CSS custom properties.
+     * Blade escaping prevents breaking out of the attribute, but it leaves
+     * colons, semicolons and parentheses intact, which is enough to append
+     * arbitrary declarations. Restrict names to the same character set
+     * Filament itself allows, and treat anything left empty as unset so the
+     * views fall back to their default colour.
+     */
+    protected function sanitizeColorName(mixed $color): ?string
+    {
+        if ($color === null) {
+            return null;
+        }
+
+        $color = (string) preg_replace('/[^a-zA-Z0-9_-]/', '', (string) $color);
+
+        return $color === '' ? null : $color;
     }
 }

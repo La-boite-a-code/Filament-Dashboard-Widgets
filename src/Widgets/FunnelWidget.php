@@ -53,7 +53,7 @@ abstract class FunnelWidget extends DashboardWidget
                 'barWidth' => $stage->getBarWidth($topValue),
                 'conversionLabel' => $conversion === null
                     ? null
-                    : (string) Number::percentage($conversion, maxPrecision: 1),
+                    : (string) Number::percentage($conversion, maxPrecision: 1, locale: app()->getLocale()),
                 'isFirst' => $index === 0,
             ];
 
@@ -64,7 +64,7 @@ abstract class FunnelWidget extends DashboardWidget
 
         if (count($stages) > 1 && $topValue > 0.0) {
             $overall = ($stages[array_key_last($stages)]->getValue() / $topValue) * 100;
-            $overallLabel = (string) Number::percentage($overall, maxPrecision: 1);
+            $overallLabel = (string) Number::percentage($overall, maxPrecision: 1, locale: app()->getLocale());
         }
 
         return [

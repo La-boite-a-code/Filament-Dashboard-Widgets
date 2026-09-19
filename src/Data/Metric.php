@@ -112,7 +112,7 @@ class Metric
         }
 
         if (is_int($value) || is_float($value)) {
-            return (string) Number::format($value);
+            return (string) Number::format($value, locale: app()->getLocale());
         }
 
         return (string) $value;
@@ -172,7 +172,7 @@ class Metric
             return null;
         }
 
-        $formatted = Number::percentage(abs((float) $this->trend), maxPrecision: 2);
+        $formatted = Number::percentage(abs((float) $this->trend), maxPrecision: 2, locale: app()->getLocale());
         $sign = $this->trend > 0 ? '+' : ($this->trend < 0 ? '-' : '');
 
         return $sign.$formatted;

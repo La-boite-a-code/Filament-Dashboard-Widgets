@@ -127,7 +127,7 @@ class UsageLimit
             return (string) ($this->formatValueUsing)($value);
         }
 
-        return (string) Number::format($value);
+        return (string) Number::format($value, locale: app()->getLocale());
     }
 
     public function getFormattedValue(): string
@@ -142,6 +142,6 @@ class UsageLimit
 
     public function getFormattedPercentage(): string
     {
-        return (string) Number::percentage($this->getPercentage(), maxPrecision: 0);
+        return (string) Number::percentage($this->getPercentage(), maxPrecision: 0, locale: app()->getLocale());
     }
 }

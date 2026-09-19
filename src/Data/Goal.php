@@ -227,7 +227,7 @@ class Goal
             return (string) ($this->formatValueUsing)($value);
         }
 
-        return (string) Number::format($value);
+        return (string) Number::format($value, locale: app()->getLocale());
     }
 
     public function getFormattedCurrent(): string
@@ -252,6 +252,6 @@ class Goal
 
     public function getFormattedPercentage(): string
     {
-        return (string) Number::percentage($this->getDisplayPercentage(), maxPrecision: 1);
+        return (string) Number::percentage($this->getDisplayPercentage(), maxPrecision: 1, locale: app()->getLocale());
     }
 }
