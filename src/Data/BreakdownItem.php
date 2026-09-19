@@ -68,7 +68,7 @@ class BreakdownItem
             return (string) ($this->formatValueUsing)($this->getValue());
         }
 
-        return (string) Number::format($this->getValue());
+        return (string) Number::format($this->getValue(), locale: app()->getLocale());
     }
 
     public function hasExplicitPercentage(): bool
@@ -97,7 +97,7 @@ class BreakdownItem
             return null;
         }
 
-        return (string) Number::percentage($percentage, maxPrecision: 1);
+        return (string) Number::percentage($percentage, maxPrecision: 1, locale: app()->getLocale());
     }
 
     public function getBarWidth(?float $total = null): float

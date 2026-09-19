@@ -55,7 +55,7 @@ class FunnelStage
             return (string) ($this->formatValueUsing)($this->getValue());
         }
 
-        return (string) Number::format($this->getValue());
+        return (string) Number::format($this->getValue(), locale: app()->getLocale());
     }
 
     /**

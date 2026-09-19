@@ -6,6 +6,28 @@ file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Numbers and percentages are now formatted with the application locale instead
+  of always falling back to English. `Illuminate\Support\Number` defaults to the
+  `en` locale and Laravel never syncs it with `app()->getLocale()`, so a French
+  or Spanish panel rendered translated labels next to `1,234.5` instead of
+  `1 234,5`. Every `Number::format()` and `Number::percentage()` call now passes
+  the current locale.
+
+### Security
+
+- Colour names passed to `color()` and `badgeColor()` are restricted to
+  `[a-zA-Z0-9_-]`, matching the character set Filament itself allows. These
+  names are interpolated into a `style` attribute as CSS custom properties.
+  Blade escaping prevented breaking out of the attribute, but colons,
+  semicolons and parentheses survived it, so an application feeding untrusted
+  input into a colour setter could append arbitrary CSS declarations to the
+  element (external resource loading, overlays, defacement). A name that is
+  left empty after sanitisation now falls back to the widget default.
+
 ## [1.0.0] - 2026-07-24
 
 ### Added

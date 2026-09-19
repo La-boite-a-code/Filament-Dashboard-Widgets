@@ -154,7 +154,7 @@ class VarianceItem
             return (string) ($this->formatValueUsing)($this->getValue());
         }
 
-        return (string) Number::format($this->getValue());
+        return (string) Number::format($this->getValue(), locale: app()->getLocale());
     }
 
     public function getFormattedChange(): string
@@ -167,7 +167,7 @@ class VarianceItem
 
         $sign = $change > 0.0 ? '+' : ($change < 0.0 ? '-' : '');
 
-        return $sign.Number::format(abs($change));
+        return $sign.Number::format(abs($change), locale: app()->getLocale());
     }
 
     public function getFormattedPercentageChange(): ?string
@@ -180,7 +180,7 @@ class VarianceItem
 
         $sign = $percentage > 0.0 ? '+' : ($percentage < 0.0 ? '-' : '');
 
-        return $sign.Number::percentage(abs($percentage), maxPrecision: 1);
+        return $sign.Number::percentage(abs($percentage), maxPrecision: 1, locale: app()->getLocale());
     }
 
     public function getBarWidth(float $maxAbsoluteChange): float

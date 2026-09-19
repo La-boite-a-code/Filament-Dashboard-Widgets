@@ -156,7 +156,7 @@ class Card
         }
 
         if (is_int($value) || is_float($value)) {
-            return (string) Number::format($value);
+            return (string) Number::format($value, locale: app()->getLocale());
         }
 
         return (string) $value;
@@ -176,9 +176,7 @@ class Card
 
     public function getBadgeColor(): ?string
     {
-        $color = $this->evaluate($this->badgeColor);
-
-        return $color === null ? null : (string) $color;
+        return $this->sanitizeColorName($this->evaluate($this->badgeColor));
     }
 
     /**

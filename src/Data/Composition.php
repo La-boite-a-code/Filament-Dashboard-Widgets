@@ -144,6 +144,6 @@ class Composition
             return (string) ($this->formatValueUsing)($total);
         }
 
-        return (string) Number::format($total);
+        return (string) Number::format($total, locale: app()->getLocale());
     }
 }
