@@ -43,7 +43,7 @@
                                     href="{{ $eventUrl }}"
                                     @if ($event->shouldOpenUrlInNewTab()) target="_blank" rel="noopener noreferrer" @endif
                                 @endif
-                                style="{{ get_color_css_variables($eventColor, [400, 500, 600]) }}"
+                                style="{{ get_color_css_variables($eventColor, [100, 400, 500, 600]) }}"
                                 class="fi-fdw-timeline__event"
                             >
                                 <span class="fi-fdw-timeline__marker" aria-hidden="true">

@@ -45,3 +45,8 @@ it('renders the cta variant with several action buttons', function (): void {
         ->assertSeeHtml('href="/team/invite"')
         ->assertSeeHtml('href="/docs/team"');
 });
+
+it('renders card descriptions with the native description scale', function (): void {
+    Livewire::test(IconCardWidget::class)
+        ->assertSeeHtml('<p class="fi-fdw-description">Explore the reference and guides</p>');
+});

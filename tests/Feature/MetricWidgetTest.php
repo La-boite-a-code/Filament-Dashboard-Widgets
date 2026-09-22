@@ -40,3 +40,13 @@ it('never renders injected CSS declarations coming from a colour setter', functi
         expect($style)->toMatch('/^(?:--color-\d+:var\(--[a-zA-Z0-9_-]+-\d+\);?)+$/');
     }
 });
+
+it('exposes the light shade used by the native icon well background', function (): void {
+    Livewire::test(RevenueMetricWidget::class)
+        ->assertSeeHtml('--color-100:var(--success-100)');
+});
+
+it('renders the description with the native description scale', function (): void {
+    Livewire::test(RevenueMetricWidget::class)
+        ->assertSeeHtml('<p class="fi-fdw-description">Compared to last month</p>');
+});

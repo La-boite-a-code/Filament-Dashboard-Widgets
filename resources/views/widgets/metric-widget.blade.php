@@ -14,7 +14,7 @@
         @endif
         @if (filled($pollingInterval)) wire:poll.{{ $pollingInterval }} @endif
         @if (filled($metric->getTooltip())) title="{{ $metric->getTooltip() }}" @endif
-        style="{{ get_color_css_variables($color, [400, 500, 600]) }}"
+        style="{{ get_color_css_variables($color, [100, 400, 500, 600]) }}"
         @class(['fi-fdw-card', 'fi-fdw-card--interactive' => filled($url)])
     >
         @unless ($hasData)
@@ -51,7 +51,7 @@
             </div>
 
             @if (filled($metric->getDescription()))
-                <p class="fi-fdw-muted">{{ $metric->getDescription() }}</p>
+                <p class="fi-fdw-description">{{ $metric->getDescription() }}</p>
             @endif
 
             @if ($metric->hasSparkline())
