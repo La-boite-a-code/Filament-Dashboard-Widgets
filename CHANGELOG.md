@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The stylesheet is now registered as a Filament asset, so
+  `php artisan filament:assets` (also run by `filament:upgrade`) publishes it
+  and the panel links it as a regular, browser cached file. It used to be
+  inlined in full, about 28 KB, into the head of every panel page on every
+  request. When the asset has not been published, the render hook still
+  inlines it, so the package keeps working out of the box. The asset is marked
+  as loaded on request so Filament never links a file that does not exist.
+
 ### Fixed
 
 - Numbers and percentages are now formatted with the application locale instead
