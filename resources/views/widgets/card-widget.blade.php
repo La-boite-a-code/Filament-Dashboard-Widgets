@@ -16,7 +16,7 @@
             @if ($card->shouldOpenUrlInNewTab()) target="_blank" rel="noopener noreferrer" @endif
         @endif
         @if (filled($pollingInterval)) wire:poll.{{ $pollingInterval }} @endif
-        style="{{ get_color_css_variables($color, [400, 500, 600]) }}"
+        style="{{ get_color_css_variables($color, [100, 400, 500, 600]) }}"
         @class([
             'fi-fdw-card',
             'fi-fdw-cardw',
@@ -49,7 +49,7 @@
                 @endif
 
                 @if ($card->hasDescription())
-                    <p class="fi-fdw-muted">{{ $card->getDescription() }}</p>
+                    <p class="fi-fdw-description">{{ $card->getDescription() }}</p>
                 @endif
 
                 @break
@@ -74,7 +74,7 @@
                         </div>
 
                         @if ($card->hasDescription())
-                            <p class="fi-fdw-muted">{{ $card->getDescription() }}</p>
+                            <p class="fi-fdw-description">{{ $card->getDescription() }}</p>
                         @endif
                     </div>
 
@@ -97,7 +97,7 @@
                 <h3 class="fi-fdw-cardw__title">{{ $card->getHeading() }}</h3>
 
                 @if ($card->hasDescription())
-                    <p class="fi-fdw-muted">{{ $card->getDescription() }}</p>
+                    <p class="fi-fdw-description">{{ $card->getDescription() }}</p>
                 @endif
 
                 @if ($card->hasActions())

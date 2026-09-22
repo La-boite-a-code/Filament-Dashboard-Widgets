@@ -37,7 +37,7 @@
                             href="{{ $itemUrl }}"
                             @if ($item->shouldOpenUrlInNewTab()) target="_blank" rel="noopener noreferrer" @endif
                         @endif
-                        style="{{ get_color_css_variables($itemColor, [400, 500, 600]) }}"
+                        style="{{ get_color_css_variables($itemColor, [100, 400, 500, 600]) }}"
                         class="fi-fdw-recent__item"
                     >
                         @if ($item->hasAvatar() || $item->hasIcon())

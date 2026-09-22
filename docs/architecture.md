@@ -78,6 +78,15 @@ never hard coded: they always resolve to the panel's registered Filament
 colours, so light and dark themes and the panel accent colour are respected
 automatically.
 
+The surfaces reuse the exact values Filament compiles for its own widgets: the
+card is a white (`gray-900` in dark mode) surface with a 1px `gray-950` ring at
+5% opacity (`white` at 10% in dark mode) over the two layer `shadow-sm`, a
+`0.75rem` radius and `1.5rem` of padding, like the stats overview stat and the
+section container. Headings, values, descriptions, icon backgrounds, row
+dividers and focus rings follow the same native scale. `StylesheetTest` pins
+these values so a change to the stylesheet cannot drift away from Filament
+silently.
+
 The stylesheet is registered with `FilamentAsset` as a `Css` asset marked as
 loaded on request, so `php artisan filament:assets` publishes it but Filament
 never links it on its own. The `PanelsRenderHook::STYLES_AFTER` render hook

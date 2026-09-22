@@ -26,6 +26,8 @@ dependencies.
 - **Native Filament everywhere it counts**: empty states, badges, icons, links
   and actions all use Filament's own components, so they follow your panel.
 - **Light and dark themes** and full responsiveness out of the box.
+- **Looks native**: cards use the same surface, ring, shadow, type scale and
+  focus ring as Filament's own widgets, so they sit next to them seamlessly.
 - **No front-end build step**: a small, self contained stylesheet built on
   Filament design tokens, served as a cached Filament asset once published and
   inlined as a fallback otherwise.

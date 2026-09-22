@@ -17,6 +17,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   request. When the asset has not been published, the render hook still
   inlines it, so the package keeps working out of the box. The asset is marked
   as loaded on request so Filament never links a file that does not exist.
+- The cards now reuse the values Filament compiles for its own widgets, so they
+  no longer stand out next to a native stats overview or chart widget: a 1px
+  `gray-950` ring at 5% (`white` at 10% in dark mode) over the two layer
+  `shadow-sm` instead of an opaque `gray-200` border and a single shadow,
+  section heading scale for titles (`1rem`) and descriptions (`0.875rem`),
+  semibold headline values at a fixed `1.875rem` instead of bold values growing
+  to `2.25rem` on wide screens, `color-100` icon backgrounds (`color-500` at 20%
+  in dark mode), `gray-200` row dividers (`white` at 5% in dark mode) and a 2px
+  `primary-600` focus ring. Clickable cards no longer lift or deepen their
+  shadow on hover, as native clickable stats do not either.
 
 ### Fixed
 

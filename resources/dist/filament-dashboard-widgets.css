@@ -2,9 +2,19 @@
  * Filament Dashboard Widgets
  * Self contained styles. Colours come from Filament design tokens so the
  * widgets follow the panel accent colour and support light and dark themes.
+ * Surfaces, rings, shadows, type scale and focus states mirror the values
+ * Filament compiles for its own widgets (stats overview, section), so these
+ * cards sit next to native widgets without any visible seam.
  */
 
+/* Same surface as a native Filament widget: a 1px ring (not a border, so it
+   takes no layout space) over the two layer "shadow-sm". The ring colour and
+   width are variables so the focus state can swap them without restating the
+   whole shadow stack. */
 .fi-fdw-card {
+    --fi-fdw-ring: color-mix(in oklab, var(--gray-950) 5%, transparent);
+    --fi-fdw-ring-width: 1px;
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -12,46 +22,29 @@
     height: 100%;
     padding: 1.5rem;
     background-color: var(--color-white);
-    border: 1px solid var(--gray-200);
     border-radius: 0.75rem;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow:
+        0 0 0 var(--fi-fdw-ring-width) var(--fi-fdw-ring),
+        0 1px 3px 0 rgb(0 0 0 / 0.1),
+        0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
 .dark .fi-fdw-card {
+    --fi-fdw-ring: color-mix(in oklab, var(--color-white) 10%, transparent);
+
     background-color: var(--gray-900);
-    border-color: rgb(255 255 255 / 0.1);
 }
 
+/* Native clickable stats have no hover treatment, only a primary focus ring. */
 .fi-fdw-card--interactive {
     color: inherit;
     text-decoration: none;
-}
-
-.fi-fdw-card--interactive:hover {
-    border-color: var(--gray-300);
-    box-shadow: 0 4px 12px -2px rgb(0 0 0 / 0.1);
-}
-
-.dark .fi-fdw-card--interactive:hover {
-    border-color: rgb(255 255 255 / 0.2);
+    outline: none;
 }
 
 .fi-fdw-card--interactive:focus-visible {
-    outline: 2px solid var(--primary-500);
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .fi-fdw-card--interactive {
-        transition:
-            border-color 0.15s ease,
-            box-shadow 0.15s ease,
-            transform 0.15s ease;
-    }
-
-    .fi-fdw-card--interactive:hover {
-        transform: translateY(-2px);
-    }
+    --fi-fdw-ring: var(--primary-600);
+    --fi-fdw-ring-width: 2px;
 }
 
 /* Heading shared by the list widgets */
@@ -62,9 +55,9 @@
 }
 
 .fi-fdw-heading__title {
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.25rem;
+    line-height: 1.5rem;
     color: var(--gray-950);
 }
 
@@ -73,8 +66,8 @@
 }
 
 .fi-fdw-heading__description {
-    font-size: 0.75rem;
-    line-height: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--gray-500);
 }
 
@@ -93,6 +86,14 @@
 .fi-fdw-muted {
     font-size: 0.75rem;
     line-height: 1rem;
+    color: var(--gray-500);
+}
+
+/* Description under a value or a title: same scale as the native stat and
+   section descriptions. .fi-fdw-muted stays for compact meta lines. */
+.fi-fdw-description {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--gray-500);
 }
 
@@ -122,7 +123,7 @@
 
 .fi-fdw-metric__value {
     font-size: 1.875rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 2.25rem;
     letter-spacing: -0.025em;
     color: var(--gray-950);
@@ -139,8 +140,8 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.625rem;
-    color: var(--color-600);
-    background-color: color-mix(in srgb, var(--color-500) 12%, transparent);
+    color: var(--color-500);
+    background-color: var(--color-100);
     flex-shrink: 0;
 }
 
@@ -244,7 +245,7 @@
     align-items: baseline;
     gap: 0.375rem;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 2rem;
     color: var(--gray-950);
 }
@@ -373,7 +374,7 @@ a.fi-fdw-recent__item:hover {
 }
 
 a.fi-fdw-recent__item:focus-visible {
-    outline: 2px solid var(--primary-500);
+    outline: 2px solid var(--primary-600);
     outline-offset: -2px;
 }
 
@@ -386,8 +387,8 @@ a.fi-fdw-recent__item:focus-visible {
     border-radius: 9999px;
     flex-shrink: 0;
     overflow: hidden;
-    color: var(--color-600);
-    background-color: color-mix(in srgb, var(--color-500) 12%, transparent);
+    color: var(--color-500);
+    background-color: var(--color-100);
 }
 
 .fi-fdw-recent__visual img {
@@ -505,13 +506,13 @@ a.fi-fdw-recent__item:focus-visible {
     flex-shrink: 0;
     overflow: hidden;
     z-index: 1;
-    color: var(--color-600);
-    background-color: color-mix(in srgb, var(--color-500) 14%, transparent);
+    color: var(--color-500);
+    background-color: var(--color-100);
 }
 
 .dark .fi-fdw-timeline__marker {
     color: var(--color-400);
-    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+    background-color: color-mix(in oklab, var(--color-500) 20%, transparent);
 }
 
 /* Connector drawn on the event, not the marker: the marker has overflow:hidden
@@ -528,7 +529,7 @@ a.fi-fdw-recent__item:focus-visible {
 }
 
 .dark .fi-fdw-timeline__event:not(:last-child)::before {
-    background-color: var(--gray-700);
+    background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
 }
 
 .fi-fdw-timeline__marker svg {
@@ -592,7 +593,7 @@ a.fi-fdw-recent__item:focus-visible {
     justify-content: space-between;
     gap: 1rem;
     padding: 0.5rem 0;
-    border-bottom: 1px solid var(--gray-100);
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .fi-fdw-details__row:last-child {
@@ -600,7 +601,7 @@ a.fi-fdw-recent__item:focus-visible {
 }
 
 .dark .fi-fdw-details__row {
-    border-color: rgb(255 255 255 / 0.06);
+    border-color: color-mix(in oklab, var(--color-white) 5%, transparent);
 }
 
 .fi-fdw-details__label {
@@ -1039,7 +1040,7 @@ a.fi-fdw-recent__item:focus-visible {
 }
 
 .dark .fi-fdw-funnel__connector-line {
-    background-color: var(--gray-700);
+    background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
 }
 
 .fi-fdw-funnel__conversion {
@@ -1080,7 +1081,7 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
 
 .fi-fdw-bullet__value {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 2rem;
     letter-spacing: -0.025em;
     color: var(--gray-950);
@@ -1264,14 +1265,14 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.625rem;
-    color: var(--color-600);
-    background-color: color-mix(in srgb, var(--color-500) 12%, transparent);
+    color: var(--color-500);
+    background-color: var(--color-100);
     flex-shrink: 0;
 }
 
 .dark .fi-fdw-cardw__stat-icon {
     color: var(--color-400);
-    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+    background-color: color-mix(in oklab, var(--color-500) 20%, transparent);
 }
 
 .fi-fdw-cardw__stat-icon svg {
@@ -1288,7 +1289,7 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
 
 .fi-fdw-cardw__value {
     font-size: 1.875rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 2.25rem;
     letter-spacing: -0.025em;
     color: var(--gray-950);
@@ -1314,14 +1315,14 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 0.75rem;
-    color: var(--color-600);
-    background-color: color-mix(in srgb, var(--color-500) 12%, transparent);
+    color: var(--color-500);
+    background-color: var(--color-100);
     flex-shrink: 0;
 }
 
 .dark .fi-fdw-cardw__tile {
     color: var(--color-400);
-    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+    background-color: color-mix(in oklab, var(--color-500) 20%, transparent);
 }
 
 .fi-fdw-cardw__tile svg {
@@ -1395,20 +1396,12 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     margin-top: 0.25rem;
 }
 
-/* Responsive: give a touch more breathing room on wider cards */
-@media (min-width: 768px) {
-    .fi-fdw-metric__value,
-    .fi-fdw-cardw__value {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-    }
-}
-
 /* Dark-mode muted-text contrast: lift secondary text to gray-400 (~5.8:1 on
    the dark surface) so labels, timestamps and percentages meet WCAG AA. */
 .dark .fi-fdw-heading__description,
 .dark .fi-fdw-label,
 .dark .fi-fdw-muted,
+.dark .fi-fdw-description,
 .dark .fi-fdw-goal__target,
 .dark .fi-fdw-breakdown__percentage,
 .dark .fi-fdw-recent__description,
@@ -1423,13 +1416,12 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     color: var(--gray-400);
 }
 
-/* Dark-mode accent icons: the metric icon and recent-item avatars used the
-   dark color-600 shade with no dark override, sitting dark-on-dark. Match the
-   card-variant convention (lighter color-400 tile) for a consistent glow. */
+/* Dark-mode accent icons: same treatment as the other icon wells, which is
+   the one Filament applies to its own coloured icon backgrounds. */
 .dark .fi-fdw-metric__icon,
 .dark .fi-fdw-recent__visual {
     color: var(--color-400);
-    background-color: color-mix(in srgb, var(--color-400) 18%, transparent);
+    background-color: color-mix(in oklab, var(--color-500) 20%, transparent);
 }
 
 /* Keyboard focus for the clickable list rows that only had a hover state. */
@@ -1438,7 +1430,7 @@ a.fi-fdw-usage__item:focus-visible,
 a.fi-fdw-variance__item:focus-visible,
 a.fi-fdw-funnel__stage:focus-visible,
 a.fi-fdw-segbar__legend-item:focus-visible {
-    outline: 2px solid var(--primary-500);
+    outline: 2px solid var(--primary-600);
     outline-offset: 2px;
     border-radius: 0.375rem;
 }
