@@ -26,7 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   to `2.25rem` on wide screens, `color-100` icon backgrounds (`color-500` at 20%
   in dark mode), `gray-200` row dividers (`white` at 5% in dark mode) and a 2px
   `primary-600` focus ring. Clickable cards no longer lift or deepen their
-  shadow on hover, as native clickable stats do not either.
+  shadow on hover, as native clickable stats do not either. Views published
+  before this release keep working: their icon backgrounds fall back to the
+  previous tint. See the upgrade guide to bring them up to date.
 
 ### Fixed
 
