@@ -107,9 +107,11 @@ it('renders headline values like native stats', function (): void {
 });
 
 it('tints icon wells like native Filament icon backgrounds', function (string $selector): void {
+    // Views published before 1.0.1 only expose the 400 to 600 shades, so the
+    // 100 shade falls back to the 1.0.0 tint instead of going transparent.
     expect(stylesheetDeclarations($selector))
         ->toHaveKey('color', 'var(--color-500)')
-        ->toHaveKey('background-color', 'var(--color-100)');
+        ->toHaveKey('background-color', 'var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent))');
 
     expect(stylesheetDeclarations('.dark '.$selector))
         ->toHaveKey('color', 'var(--color-400)')
