@@ -26,8 +26,9 @@ dependencies.
 - **Native Filament everywhere it counts**: empty states, badges, icons, links
   and actions all use Filament's own components, so they follow your panel.
 - **Light and dark themes** and full responsiveness out of the box.
-- **No front-end build step**: a small, self contained stylesheet is injected
-  inline, using Filament design tokens and the panel accent colour.
+- **No front-end build step**: a small, self contained stylesheet built on
+  Filament design tokens, served as a cached Filament asset once published and
+  inlined as a fallback otherwise.
 - **Accessible**: structured headings, screen reader labels, WCAG AA contrast
   in both themes, keyboard focus styles and `prefers-reduced-motion` support.
 - Escaped by default, with no query ever run by the package.
@@ -44,7 +45,19 @@ dependencies.
 composer require laboiteacode/filament-dashboard-widgets
 ```
 
-The package works out of the box. Publishing its resources is optional:
+The package works out of the box. Its stylesheet is registered as a Filament
+asset: once published, the panel links it as a regular, browser cached file.
+Until then, it is inlined in the page so the widgets are styled anyway.
+
+Most Filament applications already publish assets on every `composer install`
+or `composer update`, through the `@php artisan filament:upgrade` script that
+`filament:install` adds to `composer.json`. Otherwise, run:
+
+```bash
+php artisan filament:assets
+```
+
+Publishing the config file and the translations is optional:
 
 ```bash
 php artisan vendor:publish --tag="filament-dashboard-widgets-config"

@@ -73,12 +73,19 @@ This has two consequences:
 
 The widgets are styled with a single, self contained stylesheet built on
 Filament design tokens (`--gray-*`, `--primary-*`, the accent colour variables
-resolved through `Filament\Support\get_color_css_variables()`). The stylesheet
-is injected inline through the `PanelsRenderHook::STYLES_AFTER` render hook, so
-the package works out of the box with no asset publishing and no front-end build
-step. Colours are never hard coded: they always resolve to the panel's
-registered Filament colours, so light and dark themes and the panel accent
-colour are respected automatically.
+resolved through `Filament\Support\get_color_css_variables()`). Colours are
+never hard coded: they always resolve to the panel's registered Filament
+colours, so light and dark themes and the panel accent colour are respected
+automatically.
+
+The stylesheet is registered with `FilamentAsset` as a `Css` asset marked as
+loaded on request, so `php artisan filament:assets` publishes it but Filament
+never links it on its own. The `PanelsRenderHook::STYLES_AFTER` render hook
+then links the published file when it exists, giving a regular browser cached
+request, and falls back to inlining the stylesheet when it does not. The
+package therefore works out of the box with no asset publishing and no
+front-end build step, without costing a 404 per page when the asset was never
+published.
 
 Generic building blocks (empty states, badges, icons, links, actions) use
 Filament's own Blade components. Only the widget specific visuals that Filament
