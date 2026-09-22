@@ -141,7 +141,7 @@
     height: 2.5rem;
     border-radius: 0.625rem;
     color: var(--color-500);
-    background-color: var(--color-100);
+    background-color: var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent));
     flex-shrink: 0;
 }
 
@@ -388,7 +388,7 @@ a.fi-fdw-recent__item:focus-visible {
     flex-shrink: 0;
     overflow: hidden;
     color: var(--color-500);
-    background-color: var(--color-100);
+    background-color: var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent));
 }
 
 .fi-fdw-recent__visual img {
@@ -507,7 +507,7 @@ a.fi-fdw-recent__item:focus-visible {
     overflow: hidden;
     z-index: 1;
     color: var(--color-500);
-    background-color: var(--color-100);
+    background-color: var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent));
 }
 
 .dark .fi-fdw-timeline__marker {
@@ -1266,7 +1266,7 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     height: 2.5rem;
     border-radius: 0.625rem;
     color: var(--color-500);
-    background-color: var(--color-100);
+    background-color: var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent));
     flex-shrink: 0;
 }
 
@@ -1316,7 +1316,7 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
     height: 2.75rem;
     border-radius: 0.75rem;
     color: var(--color-500);
-    background-color: var(--color-100);
+    background-color: var(--color-100, color-mix(in srgb, var(--color-500) 12%, transparent));
     flex-shrink: 0;
 }
 
@@ -1417,7 +1417,9 @@ a.fi-fdw-funnel__stage:hover .fi-fdw-funnel__label {
 }
 
 /* Dark-mode accent icons: same treatment as the other icon wells, which is
-   the one Filament applies to its own coloured icon backgrounds. */
+   the one Filament applies to its own coloured icon backgrounds.
+   In light mode the wells use the 100 shade, with a fallback to the 1.0.0
+   tint for views published before 1.0.1, which only expose 400 to 600. */
 .dark .fi-fdw-metric__icon,
 .dark .fi-fdw-recent__visual {
     color: var(--color-400);
